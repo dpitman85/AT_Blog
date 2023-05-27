@@ -1,0 +1,25 @@
+<%- include('partials/header'); %>
+
+<% posts.forEach((post) => { %>
+<div class="post">
+    <form action="/delete/<%=post.id%>" method="post">
+        <label for="submit">Are you sure you want to delete this post?</label>
+        <input type="submit" value="Confirm" style="margin-left: 20px">
+    </form>
+</div>
+<div class="post">
+    <div class="post-date">
+        <h2><%=post.postDate%></h2>
+    </div>
+    <% if(post.postImage !== '') { %>
+    <div class="post-image">
+        <img src="/images/uploads/thumbnails/<%= post.postImageThumb %>" class="center">
+    </div>
+    <% } %>
+    <div class="post-text"><%var lineBreak = post.postText.replace(/\r\n|\r|\n/g, "<p>")%><%-lineBreak%>
+    </div>
+    <div class="post-index"><%= post.id %></div>
+</div>
+<% }) %>
+
+<%- include('partials/footer'); %>

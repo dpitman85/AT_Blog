@@ -1,0 +1,21 @@
+<%- include('partials/header'); %>
+
+<% posts.forEach((post) => { %>
+<div class="post">
+    <div class="post-date">
+        <h2><%=post.postDate%></h2>
+    </div>
+    <% if(post.postImage !== '') { %>
+    <div class="post-image">
+        <a href="images/uploads/<%=post.postImage%>" target="_blank"><img src="images/uploads/thumbnails/<%= post.postImageThumb %>" class="center"></a>
+    </div>
+    <% } %>
+    <div class="post-text"><%var lineBreak = post.postText.replace(/\r\n|\r|\n/g, "<p>")%><%-lineBreak%>
+    </div>
+    <div class="post-index"><%= post.id %></div>
+</div>
+<% }) %>
+
+<% if(posts.length == 10) { %><p id="load-more"><a href="/full">See All Posts</a></p><% } %>
+
+<%- include('partials/footer'); %>

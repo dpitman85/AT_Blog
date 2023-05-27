@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap');
+
+/* General Elements */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #dddddd;
+	font-family: 'Lato', sans-serif;
+}
+
+h1 {
+	font-weight: 700;
+	font-size: 4em;
+}
+
+h2 {
+	font-size: 1.4em;
+}
+
+/* Form Elements */
+input {
+	margin-bottom: 1em;
+}
+
+button {
+	padding: 0.6em 1.2em;
+	background-color: #dde;
+	border-radius: 15px;
+	border: none;
+}
+
+input[type=file], input[type=submit] {
+	font-size: 0.8em;
+}
+
+input[type=submit] {
+	padding: 4px 0.8em;
+	background-color: #ddd;
+	border-radius: 3px;
+	border: 1px solid #555;
+}
+
+input[type=submit]:hover {
+	background-color: #ddd;
+	border: 1px solid #111;
+}
+
+/* IDs */
+
+#header {
+	width: 100%;
+	background-image: url(/images/banner.jpg);
+	background-size: cover;
+	background-position: center;
+	text-align: center;
+	padding: 100px 0;
+	color: white;
+}
+
+#main {
+	padding: 0 20%; /* adjust for phone to 2em */
+}
+
+#form-container {
+	background-color: white;
+	border-radius: 30px;
+	padding: 2em 2em;
+	margin: 2em 0;
+	box-shadow: 0.4em 0.6em 1em #aaaaaa;
+	font-size: 1.4em;
+}
+
+#postBody {
+	padding: 1em;
+	font-size: 1em;
+	margin: 1em auto;
+	box-sizing: border-box;
+	border-radius: 30px;
+	resize: none;
+	width: 100%;
+}
+
+#load-more {
+	text-transform: uppercase;
+	text-align: right;
+	margin-bottom: 50px;
+	font-size: 1em;
+}
+
+/* Classes */
+.post {
+	background-color: white;
+	border-radius: 30px;
+	padding: 2em;
+	margin: 2em 0;
+	box-shadow: 0.4em 0.6em 1em #aaaaaa;
+}
+
+.post-image {
+	width: 100%;
+	max-height: 500px;
+	background-color: #eee;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: block;
+}
+
+.post-image > a, img.center {
+	max-width: 100%;
+	max-height: 500px;
+	display: block;
+	margin: 0 auto;
+}
+
+.post-text {
+	padding: 30px 10%;
+	font-size: 1.3em;
+	text-indent: 25px;
+	white-space: pre-wrap;
+}
+
+.post-text > p {
+	margin-bottom: 1em;
+}
+
+.post-date {
+	padding: 1.4em;
+}
+
+.post-index {
+	width: 100%;
+	text-align: right;
+}

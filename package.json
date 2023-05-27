@@ -1,0 +1,20 @@
+{
+  "name": "at_blog",
+  "version": "1.0.0",
+  "description": "Simple Blog for Jaberg's Appalachian Trail Hike",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dennis Pitman",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "formidable": "^2.1.1",
+    "sharp": "^0.32.1",
+    "sqlite3": "^5.1.6"
+  }
+}
