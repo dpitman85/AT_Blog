@@ -22,9 +22,15 @@ const isFileValid = (file) => {
 // Express Server
 var app = express();
 
-// Settings
+// Settings & Initialization (DB & Directories)
 const port = 3000;
 var db = new sqlite3.Database('./AT_Log.db');
+const uploadFolder = path.join(__dirname, "public/images/uploads");
+const thumbnailFolder = uploadFolder + "/thumbnails";
+
+if (!fs.existsSync(uploadFolder)) fs.mkdirSync(uploadFolder);
+if (!fs.existsSync(thumbnailFolder)) fs.mkdirSync(thumbnailFolder);
+
 app.set('view engine', 'ejs');
 app.set('views', './views/');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -73,7 +79,6 @@ app.get('/form', (req, res) => res.render('form'));
 // Route for adding Post to database
 app.post('/form', (req, res) => {
     var form = new formidable.IncomingForm();
-    const uploadFolder = path.join(__dirname, "public/images/uploads");
     
     // Form Attributes
     form.maxFileSize = 50 * 1024 * 1024; //50mb max
@@ -176,8 +181,6 @@ app.get('/delete/:id', (req, res) => {
 
 // Delete Post Message
 app.post('/delete/:id', (req, res) => {
-    const uploadFolder = path.join(__dirname, "public/images/uploads");
-    const thumbnailFolder = uploadFolder + "/thumbnails";
     let sqlS = `SELECT rowid id, postImage postImage, postImageThumb postImageThumb, postText postText, postDate postDate FROM posts WHERE rowid = ${req.params.id}`;
     db.all(sqlS, [], (err, rows) => {
         if(err) {
