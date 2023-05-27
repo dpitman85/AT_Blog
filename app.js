@@ -24,7 +24,7 @@ var app = express();
 
 // Settings
 const port = 3000;
-var db = new sqlite3.Database('./data/AT_Log.db');
+var db = new sqlite3.Database('./AT_Log.db');
 app.set('view engine', 'ejs');
 app.set('views', './views/');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,9 +45,6 @@ app.get('/', (req, res) => {
         }
         var rowsSegment = rows.slice(-10);
 
-        rowsSegment.forEach((row)=> {
-            console.log(`${row.id} ${row.postImage} "${row.postText}" ${row.postDate}`);
-        });
         res.render('index', {
             posts: rowsSegment.reverse()
         });
@@ -62,9 +59,6 @@ app.get('/full', (req, res) => {
             throw err;
         }
         
-        rows.forEach((row)=> {
-            console.log(`${row.id} ${row.postImage} "${row.postText}" ${row.postDate}`);
-        });
         res.render('index', {
             posts: rows.reverse()
         });
@@ -143,7 +137,6 @@ app.post('/form', (req, res) => {
                     if(err) {
                         return console.log(err.message);
                     }
-                    console.log(`${fileName} has been added, with text "${textbox}"`);
                 });
             });
         } catch (error) {
@@ -174,13 +167,9 @@ app.get('/delete/:id', (req, res) => {
         if(!rows.length) {
             return res.send('That post does not exist<br><a href="/">Return Home</a>');
         }
-        var rowsSegment = rows.slice(-10);
 
-        rowsSegment.forEach((row)=> {
-            console.log(`${row.id} ${row.postImage} "${row.postText}" ${row.postDate}`);
-        });
         res.render('delete', {
-            posts: rowsSegment.reverse()
+            posts: rows.reverse()
         });
     });
 });
@@ -214,9 +203,52 @@ app.post('/delete/:id', (req, res) => {
     res.redirect('/');
 });
 
+// MODIFY POST
+
+// Modification Page
+app.get('/edit/:id', (req, res) => {
+    let sql = `SELECT rowid id, postImage postImage, postImageThumb postImageThumb, postText postText, postDate postDate FROM posts WHERE rowid = ${req.params.id}`;
+    db.all(sql, [], (err, rows) => {
+        if(err) {
+            throw err;
+        }
+        if(!rows.length) {
+            return res.send('That post does not exist<br><a href="/">Return Home</a>');
+        }
+
+        res.render('edit', {
+            posts: rows.reverse()
+        });
+    });
+});
+
+// Modify Post Message
+app.post('/edit/:id', (req, res) => {
+    var form = new formidable.IncomingForm();
+    
+    // Parsing
+    form.parse(req, async (err, fields, files) => {
+        const textbox = fields.postBody; //name based on textarea name in form
+        console.log(fields);
+        console.log(textbox);
+        // Update post in database
+            try {
+                db.serialize(() => {
+                    db.run(`UPDATE posts SET postText = ? WHERE rowid = ?`, [textbox, req.params.id], (err) => {
+                        if(err) {
+                            return console.log(err.message);
+                        }
+                    });
+                });
+            } catch (error) {
+                res.send(error);
+            }
+    });
+    res.redirect('/');
+});
+
 
 // Launch Server
-
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });

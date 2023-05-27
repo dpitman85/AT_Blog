@@ -136,3 +136,6 @@ public/uploads/*.png
 public/uploads/thumbnails/*.jpg
 public/uploads/thumbnails/*.jpeg
 public/uploads/thumbnails/*.png
+
+# post database
+*.db
