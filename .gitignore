@@ -130,12 +130,12 @@ dist
 .pnp.*
 
 # uploads directory files
-public/uploads/*.jpg
-public/uploads/*.jpeg
-public/uploads/*.png
-public/uploads/thumbnails/*.jpg
-public/uploads/thumbnails/*.jpeg
-public/uploads/thumbnails/*.png
+public/images/uploads/*.jpg
+public/images/uploads/*.jpeg
+public/images/uploads/*.png
+public/images/uploads/thumbnails/*.jpg
+public/images/uploads/thumbnails/*.jpeg
+public/images/uploads/thumbnails/*.png
 
 # post database
 *.db
