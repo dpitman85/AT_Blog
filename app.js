@@ -23,7 +23,7 @@ const isFileValid = (file) => {
 var app = express();
 
 // Settings & Initialization (DB & Directories)
-const port = 3000;
+const port = 8080;
 var db = new sqlite3.Database('./AT_Log.db');
 const uploadFolder = path.join(__dirname, "public/images/uploads");
 const thumbnailFolder = uploadFolder + "/thumbnails";
