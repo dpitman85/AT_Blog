@@ -173,7 +173,7 @@ app.post('/form', (req, res) => {
             });
         }
     });
-    slackMessage(slackChannel, 'Jaberg has posted at http://yesmountainovermountains.com').catch(err => console.log(err));
+    slackMessage(slackChannel, 'Jaberg has posted a trail update at http://yesmountainovermountains.com').catch(err => console.log(err));
     res.redirect('/');
 });
 
