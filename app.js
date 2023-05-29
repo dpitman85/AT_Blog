@@ -8,6 +8,7 @@ const ejs = require('ejs');
 const formidable = require('formidable');
 const fs = require('fs');
 const sharp = require('sharp');
+const axios = require('axios');
 
 // Define File Validation Function
 const isFileValid = (file) => {
@@ -19,12 +20,26 @@ const isFileValid = (file) => {
     return true;
 };
 
+// Define Slack API Function
+async function slackMessage(channel, botMessage) {
+    const url = 'https://slack.com/api/chat.postMessage';
+    const res = await axios.post(url, {
+        channel: channel,
+        text: botMessage
+    }, { headers: {authorization: `Bearer ${slackToken}`}});
+
+    console.log('Done', res.data);
+}
+
 // Express Server
 var app = express();
 
 // Settings & Initialization (DB & Directories)
 const port = 8080;
-var db = new sqlite3.Database('./AT_Log.db');
+const slackToken = 'xoxb-432301170199-1283616219170-p3Tt1fWyHdH53bwRg77fxrSt';
+const slackChannel = '#at-blog-test'; //change to '#a_whole_lotta_walkin' when ready to deploy
+const dbPath = path.join(__dirname, "AT_Log.db");
+var db = new sqlite3.Database(dbPath);
 const uploadFolder = path.join(__dirname, "public/images/uploads");
 const thumbnailFolder = uploadFolder + "/thumbnails";
 
@@ -32,10 +47,10 @@ if (!fs.existsSync(uploadFolder)) fs.mkdirSync(uploadFolder);
 if (!fs.existsSync(thumbnailFolder)) fs.mkdirSync(thumbnailFolder);
 
 app.set('view engine', 'ejs');
-app.set('views', './views/');
+app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/', express.static(path.join(__dirname, './public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 // Initialize database table if it does not exist with columns rowid (default INTEGER PRIMARY KEY), postImage (TEXT UNIQUE), postText (TEXT), postDate (TEXT UNIQUE)
 db.run('CREATE TABLE IF NOT EXISTS posts (postImage TEXT, postImageThumb TEXT, postText TEXT, postDate TEXT UNIQUE)');
@@ -157,7 +172,8 @@ app.post('/form', (req, res) => {
             });
         }
     });
-    res.redirect('/')
+    res.redirect('/');
+    slackMessage(slackChannel, 'Jaberg has posted at http://yesmountainovermountains.com').catch(err => console.log(err));
 });
 
 // DELETE POST
