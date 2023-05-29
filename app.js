@@ -25,7 +25,8 @@ async function slackMessage(channel, botMessage) {
     const url = 'https://slack.com/api/chat.postMessage';
     const res = await axios.post(url, {
         channel: channel,
-        text: botMessage
+        text: botMessage,
+        username: 'Jaberg Update Bot'
     }, { headers: {authorization: `Bearer ${slackToken}`}});
 
     console.log('Done', res.data);
@@ -36,7 +37,7 @@ var app = express();
 
 // Settings & Initialization (DB & Directories)
 const port = 8080;
-const slackToken = 'xoxb-432301170199-1283616219170-p3Tt1fWyHdH53bwRg77fxrSt';
+const slackToken = 'xoxb-432301170199-1283616219170-0AaF3r8bAmrpZNKId254hQ2W';
 const slackChannel = '#at-blog-test'; //change to '#a_whole_lotta_walkin' when ready to deploy
 const dbPath = path.join(__dirname, "AT_Log.db");
 var db = new sqlite3.Database(dbPath);
@@ -172,8 +173,8 @@ app.post('/form', (req, res) => {
             });
         }
     });
-    res.redirect('/');
     slackMessage(slackChannel, 'Jaberg has posted at http://yesmountainovermountains.com').catch(err => console.log(err));
+    res.redirect('/');
 });
 
 // DELETE POST
