@@ -37,7 +37,7 @@ var app = express();
 
 // Settings & Initialization (DB & Directories)
 const port = 8080;
-const slackToken = 'xoxb-432301170199-1283616219170-0AaF3r8bAmrpZNKId254hQ2W';
+const slackToken = '';
 const slackChannel = '#at-blog-test'; //change to '#a_whole_lotta_walkin' when ready to deploy
 const dbPath = path.join(__dirname, "AT_Log.db");
 var db = new sqlite3.Database(dbPath);
